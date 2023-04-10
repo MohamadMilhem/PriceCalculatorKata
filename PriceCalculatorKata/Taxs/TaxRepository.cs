@@ -15,7 +15,11 @@ namespace PriceCalculatorKata.Taxs
         {
             _taxes = new List<Tax>()
             {
+<<<<<<< Updated upstream
                 new Tax(20),
+=======
+                new Tax(0.21m),
+>>>>>>> Stashed changes
             };
         }
 

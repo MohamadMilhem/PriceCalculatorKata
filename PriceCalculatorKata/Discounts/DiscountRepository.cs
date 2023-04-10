@@ -15,7 +15,12 @@ namespace PriceCalculatorKata.Discounts
         {
             _discounts = new List<Discount>()
             {
+<<<<<<< Updated upstream
                 new Discount(15),
+=======
+                new Discount(0.15m),
+                new Discount(0.07m, 12345)
+>>>>>>> Stashed changes
             };
         }
 
