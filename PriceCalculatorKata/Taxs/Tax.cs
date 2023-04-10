@@ -9,7 +9,7 @@ namespace PriceCalculatorKata.Taxs
     public class Tax
     {
         public long ProductUPC { get; set; }
-        public decimal TaxPercentage { get; set; } = 20m;
+        public decimal TaxPercentage { get; set; } = 0.20m;
         public bool IsUniversal { get; set; } = false;
 
 

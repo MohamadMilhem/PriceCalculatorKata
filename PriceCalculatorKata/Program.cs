@@ -25,6 +25,7 @@ namespace PriceCalculatorKata
                 var option = long.Parse(optionFromConsole);
                 var ProductsOnline = new ProductRepository();
                 var ProductEntered = ProductsOnline.GetProductByUPC(option);
+              
 
                 if (ProductEntered == null)
                 {
@@ -32,15 +33,21 @@ namespace PriceCalculatorKata
                     continue;
                 }
 
-                var Calucations = new ProductCalucations(ProductEntered);
+                var Calculations = new ProductCalculations(ProductEntered);
+                var Printer = new ConsolePrint(ProductEntered);
 
                 Console.WriteLine(ProductEntered.ToString());
-                Console.WriteLine($"The total tax precentage: %{Calucations.ProductCalculateTotalTax()}");
-                Console.WriteLine($"The total Discount precentage: %{Calucations.ProductCalculateTotalDiscount()}");
+                Console.WriteLine($"UPC discount amount = ${Calculations.BeforeTaxDiscountsAmount()}");
+                Console.WriteLine($"New Price is : {ProductEntered.BasePrice - Calculations.BeforeTaxDiscountsAmount()}");
+                Console.WriteLine($"Tax amount = ${ProductEntered.BasePrice - Calculations.BeforeTaxDiscountsAmount()} * " +
+                                    $"{Calculations.TaxPrecentageSum()} = ${Calculations.GetTotalTax()}");
 
+                Console.WriteLine($"Universal discount :{ProductEntered.BasePrice - Calculations.BeforeTaxDiscountsAmount()} " +
+                    $" * {Calculations.DiscountAfterPrecentageSum()} = ${Calculations.AfterTaxDiscountsAmount(Calculations.BeforeTaxDiscountsAmount())}");
 
-                Console.WriteLine($"The Final Price of the Product is ${Calucations.ProductCalculateFinalPrice()}");
-                ConsolePrint.ReportDiscount(Calucations);
+                Console.WriteLine($"The Final Price of the Product is ${Calculations.FinalPrice()}");
+
+                Printer.ReportDiscount();
 
             }
 

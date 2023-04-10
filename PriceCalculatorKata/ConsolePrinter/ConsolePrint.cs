@@ -7,18 +7,24 @@ using PriceCalculatorKata.Products;
 
 namespace PriceCalculatorKata.ConsolePrinter
 {
-    public static class ConsolePrint
+    public class ConsolePrint
     {
-        public static void ReportDiscount(ProductCalucations Calculations)
+        private Product Product { get; set; }
+        private ProductCalculations Calculations { get; set; }
+       
+        public ConsolePrint(Product product) 
         {
-            Console.WriteLine($"The Price is ${Calculations.ProductCalculateFinalPrice()}");
-            if (Calculations.ProductCalculateDiscountAmount() > 0)
-            {
-                Console.WriteLine($"with discount ${Calculations.ProductCalculateDiscountAmount()}");
-            }
+            this.Product = product;
+            this.Calculations = new ProductCalculations(product);
         }
 
 
+        public void ReportDiscount()
+        {
+            Console.WriteLine(Product.ToString());
+            Console.WriteLine($"Base Price : ${Calculations.FinalPrice()}");
+            Console.WriteLine($"Discount Price: ${Calculations.GetTotalDiscount()}");
+        }
 
 
     }

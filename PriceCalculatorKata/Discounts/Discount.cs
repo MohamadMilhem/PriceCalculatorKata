@@ -4,14 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace PriceCalculatorKata.Discounts
 {
     public class Discount : IDiscount
     {
 
+        
+
         public long ProductUPC { get; set; }
         public decimal DiscountPrecentage { set; get; }
         public bool IsUniversal { get; set; } = false;
+        public DiscountType DiscountType { get; set; }
+
 
         public Discount(decimal DiscountPrecentage)
         {
