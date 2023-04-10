@@ -15,9 +15,7 @@ namespace PriceCalculatorKata.Products
         {
             _products = new List<Product>
             {
-                new Product("Book", 1234, 20.25m),
-                new Product("Sun glasses", 4321, 50.55m),
-                new Product("Laptop", 5000, 1000.15m)
+                new Product ("The Little Prince", 12345, 20.25m)
             };
         }
 

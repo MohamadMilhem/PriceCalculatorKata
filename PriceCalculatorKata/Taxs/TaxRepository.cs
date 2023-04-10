@@ -15,7 +15,7 @@ namespace PriceCalculatorKata.Taxs
         {
             _taxes = new List<Tax>()
             {
-                new Tax(20),
+                new Tax(0.20m),
             };
         }
 
@@ -25,7 +25,7 @@ namespace PriceCalculatorKata.Taxs
             return _taxes;
         }
 
-        public IEnumerable<Tax> GetDiscountsByUPC(long UPC)
+        public IEnumerable<Tax> GetTaxesByUPC(long UPC)
         {
             return _taxes.Where(tax => tax.IsUniversal || tax.ProductUPC == UPC);
         }
