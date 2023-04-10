@@ -8,28 +8,27 @@ namespace PriceCalculatorKata.Taxs
 {
     public class Tax
     {
-        public decimal BasePrice { get; set; }
+        public long ProductUPC { get; set; }
         public decimal TaxPercentage { get; set; } = 20m;
+        public bool IsUniversal { get; set; } = false;
 
 
-        public Tax() { }
-
-        public Tax(decimal BasePrice, decimal TaxPercentage)
+        public Tax(decimal TaxPercentage)
         {
-            this.BasePrice = BasePrice;
-            this.TaxPercentage = TaxPercentage; 
+            this.TaxPercentage = TaxPercentage;
+            this.IsUniversal = true;
         }
 
-        public decimal TaxAmount()
+        public Tax(long ProductUPC, decimal TaxPercentage)
         {
-            decimal TaxFraction = TaxPercentage / 100;
-            return Math.Round(BasePrice * TaxFraction, 2);
+            this.ProductUPC = ProductUPC;
+            this.TaxPercentage = TaxPercentage;
         }
 
 
         public override string ToString()
         {
-            string TaxString = $"The Base Price was ${BasePrice}, after Applying the %{TaxPercentage} Tax the new price is {BasePrice + TaxAmount()}.";
+            string TaxString = $"Product with UPC : {ProductUPC} have a Tax with precentage {TaxPercentage}.";
             return TaxString;
         }
 

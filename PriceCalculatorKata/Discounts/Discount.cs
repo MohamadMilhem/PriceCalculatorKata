@@ -6,35 +6,30 @@ using System.Threading.Tasks;
 
 namespace PriceCalculatorKata.Discounts
 {
-    public class Discount
+    public class Discount : IDiscount
     {
-        public decimal BasePrice { get; set; }
 
-        public decimal DiscountPrecentage;
+        public long ProductUPC { get; set; }
+        public decimal DiscountPrecentage { set; get; }
+        public bool IsUniversal { get; set; } = false;
 
-
-        public Discount() { }
-
-        public Discount(decimal BasePrice, decimal DiscountPrecentage)
+        public Discount(decimal DiscountPrecentage)
         {
-            this.BasePrice = BasePrice;
             this.DiscountPrecentage = DiscountPrecentage;
+            this.IsUniversal = true;
         }
 
-        public decimal DiscountAmount()
+        public Discount(decimal DiscountPrecentage, long ProductUPC)
         {
-            decimal DiscountFraction = DiscountPrecentage / 100;
-            return Math.Round(BasePrice * DiscountFraction, 2);
+            this.DiscountPrecentage = DiscountPrecentage;
+            this.ProductUPC = ProductUPC;
         }
-
-
 
         public override string ToString()
         {
-            string DiscountString = $"The Base Price was {BasePrice}, after applying the %{DiscountPrecentage} Discount the new price is {BasePrice - DiscountAmount()}.";
+            string DiscountString = $"Product with UPC : {ProductUPC} have Discount of Precentage {DiscountPrecentage}";
             return DiscountString;
         }
-
 
     }
 }

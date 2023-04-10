@@ -6,27 +6,22 @@ using System.Threading.Tasks;
 
 namespace PriceCalculatorKata.Products
 {
-    public class Product
+    public class Product : IProduct
     {
         public string Name { get; set; } = string.Empty;
         public long UPC { get; set; }
         public decimal BasePrice { get; set; } = 0.00m;
-
-
-        public Product()
-        {
-        }
 
         public Product(string Name, long UPC, decimal BasePrice)
         {
             this.Name = Name;
             this.UPC = UPC;
             this.BasePrice = BasePrice;
-        }   
+        }
 
         public override string ToString()
         {
-            string ProductString = $"Name : {Name}, UPC : {UPC}, Base Price: {BasePrice}";
+            string ProductString = $"Name : {Name}, UPC : {UPC}, Base Price: ${BasePrice}";
             return ProductString;
         }
 
