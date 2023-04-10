@@ -10,23 +10,23 @@ namespace PriceCalculatorKata.Products
     {
         public string Name { get; set; } = string.Empty;
         public long UPC { get; set; }
-        public decimal OriginalPrice { get; set; } = 0.00m;
+        public decimal BasePrice { get; set; } = 0.00m;
 
 
         public Product()
         {
         }
 
-        public Product(string Name, long UPC, decimal OriginalPrice)
+        public Product(string Name, long UPC, decimal BasePrice)
         {
             this.Name = Name;
             this.UPC = UPC;
-            this.OriginalPrice = OriginalPrice;
+            this.BasePrice = BasePrice;
         }   
 
         public override string ToString()
         {
-            string ProductString = $"Name : {Name}, UPC : {UPC}, Original Price: ${OriginalPrice}";
+            string ProductString = $"Name : {Name}, UPC : {UPC}, Base Price: {BasePrice}";
             return ProductString;
         }
 

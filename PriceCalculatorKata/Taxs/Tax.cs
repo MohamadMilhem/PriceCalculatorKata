@@ -26,14 +26,10 @@ namespace PriceCalculatorKata.Taxs
             return Math.Round(BasePrice * TaxFraction, 2);
         }
 
-        public decimal PriceAfterTax()
-        {
-            return Math.Round(TaxAmount() + BasePrice, 2);
-        }
 
         public override string ToString()
         {
-            string TaxString = $"The Base Price was ${BasePrice}, after Applying the %{TaxPercentage} Tax the new price is ${PriceAfterTax()}";
+            string TaxString = $"The Base Price was ${BasePrice}, after Applying the %{TaxPercentage} Tax the new price is {BasePrice + TaxAmount()}.";
             return TaxString;
         }
 

@@ -1,5 +1,6 @@
 ﻿using PriceCalculatorKata.Products;
 using PriceCalculatorKata.Taxs;
+using PriceCalculatorKata.Discounts;
 using System.Net.Mail;
 
 namespace PriceCalculatorKata
@@ -11,10 +12,13 @@ namespace PriceCalculatorKata
 
             var SampleProduct = new Product("The Little Prince" , 12345, 20.25m);
             Console.WriteLine(SampleProduct.ToString());
-            var ApplyTax = new Tax(SampleProduct.OriginalPrice, 20m);
-            Console.WriteLine(ApplyTax.ToString());
-            ApplyTax.TaxPercentage = 21;
-            Console.WriteLine(ApplyTax.ToString());
+            var Tax = new Tax(SampleProduct.BasePrice, 20m);
+            var Discount = new Discount(SampleProduct.BasePrice, 15);
+
+            var FinalPrice = SampleProduct.BasePrice + Tax.TaxAmount() - Discount.DiscountAmount();
+
+            Console.WriteLine($"The base price was {SampleProduct.BasePrice}, the final price is {FinalPrice}");
+
 
         }
     }
