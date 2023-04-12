@@ -45,7 +45,7 @@ namespace PriceCalculatorKata.Products
                 TotalExpenses += ExpenseAmount(Expense);
             }
 
-            return TotalExpenses;
+            return Math.Round(TotalExpenses, 2);
 
         }
 
@@ -53,10 +53,10 @@ namespace PriceCalculatorKata.Products
         {
             if (Expense.ExpenseType == ExpenseType.Absolute)
             {
-                return Expense.Amount;
+                return Math.Round(Expense.Amount, 2);
             }
 
-            return _product.BasePrice * Expense.Amount;
+            return Math.Round(_product.BasePrice * Expense.Amount, 2);
         }
         
 
