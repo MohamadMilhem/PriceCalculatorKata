@@ -15,7 +15,7 @@ namespace PriceCalculatorKata.Taxs
         {
             _taxes = new List<Tax>()
             {
-                new Tax(0.20m),
+                new Tax(0.21m),
             };
         }
 
