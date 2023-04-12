@@ -8,4 +8,5 @@ namespace PriceCalculatorKata
 {
     public enum DiscountType { AfterTax, BeforeTax };
 
+
 }
