@@ -7,32 +7,55 @@ using PriceCalculatorKata.Discounts;
 using PriceCalculatorKata.Taxs;
 using PriceCalculatorKata.ConsolePrinter;
 using PriceCalculatorKata.Expenses;
+using PriceCalculatorKata.Caps;
 
 namespace PriceCalculatorKata.Products
 {
     public class ProductCalculations
     {
-        private readonly DiscountCalculatingType _discountCalculatingType = DiscountCalculatingType.Multiplicative;
+        private readonly DiscountCalculatingType _discountCalculatingType = DiscountCalculatingType.Additive;
         private readonly Product _product;
         private readonly TaxRepository _taxes;
         private readonly DiscountRepository _discounts;
         private readonly ExpensesRepository _expenses;
+        private readonly CapRepository _caps;
         public ProductCalculations(Product product)
         {
             this._product = product;
             this._taxes = new TaxRepository();
             this._discounts = new DiscountRepository();
             this._expenses = new ExpensesRepository();
+            this._caps = new CapRepository();
         }
 
 
         public decimal FinalPrice()
         {
-            var TotalDiscount = GetTotalDiscount();
+            var TotalDiscount = MaximunDiscount();
             var TotalTax = GetTotalTax();
             var TotalExpenses = GetTotalExpenses();
 
             return Math.Round(_product.BasePrice + TotalTax + TotalExpenses - TotalDiscount, 2);
+        }
+
+        public decimal MaximunDiscount()
+        {
+            return Math.Min(GetTotalDiscount(), GetCap());
+        }
+
+        public decimal GetCap()
+        {
+            return _caps.GetCapsByUPC(_product.UPC).Min(cap => CapAmount(cap));
+        }
+
+        public decimal CapAmount(Cap cap)
+        {
+            if (cap.CapType == CapType.Absolute)
+            {
+                return cap.Amount;
+            }
+
+            return Math.Round(cap.Amount * _product.BasePrice, 2);
         }
 
         public decimal GetTotalExpenses()
