@@ -13,4 +13,11 @@ namespace PriceCalculatorKata
     public enum DiscountCalculatingType { Additive, Multiplicative };
 
     public enum CapType { Percentage, Absolute }
+
+    public enum CurrencyType 
+    {
+        USD,
+        GBP,
+        JPY
+    }
 }
