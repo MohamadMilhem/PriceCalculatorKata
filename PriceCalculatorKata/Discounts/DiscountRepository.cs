@@ -18,9 +18,6 @@ namespace PriceCalculatorKata.Discounts
             {
                 new Discount(0.15m),
                 new Discount(0.07m, 12345)
-                {
-                    DiscountType = DiscountType.BeforeTax,
-                }
             };
         }
 
