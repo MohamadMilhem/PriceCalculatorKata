@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PriceCalculatorKata.Expenses
 {
-    public class ExpensesRepository
+    public class ExpensesRepository : IExpensesRepository
     {
 
         private List<Expense> _expenses;
