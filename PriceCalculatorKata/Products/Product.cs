@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PriceCalculatorKata.Currency;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace PriceCalculatorKata.Products
 
         public override string ToString()
         {
-            string ProductString = $"Name : {Name}, UPC : {UPC}, Base Price: ${BasePrice}";
+            string ProductString = $"Name : {Name}, UPC : {UPC}, Base Price: {BasePrice} {CurrencyFormater.CurrencyFromat(this.CurrencyType)}";
             return ProductString;
         }
 
