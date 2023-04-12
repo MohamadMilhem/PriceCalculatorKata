@@ -11,4 +11,6 @@ namespace PriceCalculatorKata
     public enum ExpenseType { Percentage, Absolute };
 
     public enum DiscountCalculatingType { Additive, Multiplicative };
+
+    public enum CapType { Percentage, Absolute }
 }
