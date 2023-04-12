@@ -12,7 +12,7 @@ namespace PriceCalculatorKata.Products
 {
     public class ProductCalculations
     {
-
+        private readonly DiscountCalculatingType _discountCalculatingType = DiscountCalculatingType.Multiplicative;
         private readonly Product _product;
         private readonly TaxRepository _taxes;
         private readonly DiscountRepository _discounts;
@@ -91,33 +91,66 @@ namespace PriceCalculatorKata.Products
 
         public decimal BeforeTaxDiscountsAmount()
         {
-            var DiscountPrecentageBefore = DiscountBeforePrecentageSum();
+            var DiscountPrecentageBefore = 0m;
+            if (_discountCalculatingType == DiscountCalculatingType.Additive)
+            {
+                DiscountPrecentageBefore = DiscountPrecentageSum(DiscountType.BeforeTax);
+            }
+
+            else if (_discountCalculatingType == DiscountCalculatingType.Multiplicative)
+            {
+                DiscountPrecentageBefore = DiscountPrecentageMultiply(DiscountType.BeforeTax);
+            }
+
 
             var PriceBefore = _product.BasePrice;
             return Math.Round(PriceBefore * DiscountPrecentageBefore, 2);
         }
 
-        public decimal DiscountBeforePrecentageSum()
+        public decimal DiscountPrecentageSum(DiscountType DiscountType)
         {
             return _discounts.GetDiscountsByUPC(_product.UPC)
-                        .Where(discount => discount.DiscountType == DiscountType.BeforeTax)
+                        .Where(discount => discount.DiscountType == DiscountType)
                               .Sum(discount => discount.DiscountPrecentage);
         }
 
+        public decimal DiscountPrecentageMultiply(DiscountType DiscountType)
+        {
+            var discounts = _discounts.GetDiscountsByUPC(_product.UPC)
+                                .Where(discount => discount.DiscountType == DiscountType);
+
+            var answer = 0m;
+
+            decimal Precentage = 1.0m;
+            foreach (var discount in discounts)
+            {
+                var PrecentageNow = discount.DiscountPrecentage * Precentage;
+                Precentage -= PrecentageNow;
+                answer+= PrecentageNow;
+            }
+
+            return answer;
+
+        }
+
+
         public decimal AfterTaxDiscountsAmount(decimal BeforeTax)
         {
-            var DiscountPrecentageAfter = DiscountAfterPrecentageSum();
-            var PriceAfter = _product.BasePrice - BeforeTax;
+            var DiscountPrecentageAfter = 0m;
+            if (_discountCalculatingType == DiscountCalculatingType.Additive)
+            {
+                DiscountPrecentageAfter = DiscountPrecentageSum(DiscountType.AfterTax);
+            }
 
+            else if (_discountCalculatingType == DiscountCalculatingType.Multiplicative)
+            {
+                DiscountPrecentageAfter = DiscountPrecentageMultiply(DiscountType.AfterTax);
+            }
+
+            var PriceAfter = _product.BasePrice - BeforeTax;
             return Math.Round(PriceAfter * DiscountPrecentageAfter, 2);
         }
 
-        public decimal DiscountAfterPrecentageSum()
-        {
-            return _discounts.GetDiscountsByUPC(_product.UPC)
-                             .Where(discount => discount.DiscountType == DiscountType.AfterTax)
-                                   .Sum(discount => discount.DiscountPrecentage);
-        }
 
     }
 }
