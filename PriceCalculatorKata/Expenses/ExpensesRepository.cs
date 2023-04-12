@@ -15,8 +15,8 @@ namespace PriceCalculatorKata.Expenses
         public ExpensesRepository()
         {
             _expenses = new List<Expense>() {
-                new Expense(0.01m , ExpenseType.Percentage, "Packaging"),
-                new Expense(2.2m, ExpenseType.Absolute, "Transport"),
+                new Expense(0.01m , ExpenseType.Percentage, "Packaging"){ ProductUPC = 12345},
+                new Expense(2.2m, ExpenseType.Absolute, "Transport"){ProductUPC = 12345},
             };
 
         }
