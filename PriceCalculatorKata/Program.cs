@@ -36,17 +36,7 @@ namespace PriceCalculatorKata
                 var Calculations = new ProductCalculations(ProductEntered);
                 var Printer = new ConsolePrint(ProductEntered);
 
-                Console.WriteLine(ProductEntered.ToString());
-                Console.WriteLine($"UPC discount amount = ${Calculations.BeforeTaxDiscountsAmount()}");
-                Console.WriteLine($"New Price is : {ProductEntered.BasePrice - Calculations.BeforeTaxDiscountsAmount()}");
-                Console.WriteLine($"Tax amount = ${ProductEntered.BasePrice - Calculations.BeforeTaxDiscountsAmount()} * " +
-                                    $"{Calculations.TaxPrecentageSum()} = ${Calculations.GetTotalTax()}");
-
-                Console.WriteLine($"Universal discount :{ProductEntered.BasePrice - Calculations.BeforeTaxDiscountsAmount()} " +
-                    $" * {Calculations.DiscountAfterPrecentageSum()} = ${Calculations.AfterTaxDiscountsAmount(Calculations.BeforeTaxDiscountsAmount())}");
-
-                Console.WriteLine($"The Final Price of the Product is ${Calculations.FinalPrice()}");
-
+                Printer.ReportExpenses();
                 Printer.ReportDiscount();
 
             }
