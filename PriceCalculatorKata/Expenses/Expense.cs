@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace PriceCalculatorKata.Expenses
 {
-    public class Expenses : IExpenses
+    public class Expense : IExpenses
     {
         public string Description { get; set; }
         public decimal Amount { get; set; }
         public ExpenseType ExpenseType { get; set; }
 
-        public Expenses(decimal Amount, ExpenseType ExpenseType, string Description)
+        public long ProductUPC { get; set; }
+
+        public Expense(decimal Amount, ExpenseType ExpenseType, string Description)
         {
             this.Amount = Amount;
             this.ExpenseType = ExpenseType;
