@@ -11,6 +11,7 @@ namespace PriceCalculatorKata.Products
         public string Name { get; set; } = string.Empty;
         public long UPC { get; set; }
         public decimal BasePrice { get; set; } = 0.00m;
+        public CurrencyType CurrencyType { get; set; } = CurrencyType.USD;
 
         public Product(string Name, long UPC, decimal BasePrice)
         {
