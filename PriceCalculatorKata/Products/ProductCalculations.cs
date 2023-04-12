@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using PriceCalculatorKata.Discounts;
 using PriceCalculatorKata.Taxs;
 using PriceCalculatorKata.ConsolePrinter;
+using PriceCalculatorKata.Expenses;
 
 namespace PriceCalculatorKata.Products
 {
@@ -15,11 +16,13 @@ namespace PriceCalculatorKata.Products
         private readonly Product _product;
         private readonly TaxRepository _taxes;
         private readonly DiscountRepository _discounts;
+        private readonly ExpensesRepository _expenses;
         public ProductCalculations(Product product)
         {
             this._product = product;
             this._taxes = new TaxRepository();
             this._discounts = new DiscountRepository();
+            this._expenses = new ExpensesRepository();
         }
 
 
@@ -27,9 +30,36 @@ namespace PriceCalculatorKata.Products
         {
             var TotalDiscount = GetTotalDiscount();
             var TotalTax = GetTotalTax();
+            var TotalExpenses = GetTotalExpenses();
 
-            return Math.Round(_product.BasePrice + TotalTax - TotalDiscount, 2);
+            return Math.Round(_product.BasePrice + TotalTax + TotalExpenses - TotalDiscount, 2);
         }
+
+        public decimal GetTotalExpenses()
+        {
+            var AllExpensesForThisProduct = _expenses.GetExpensesByUPC(_product.UPC);
+            decimal TotalExpenses = 0;
+
+            foreach (var Expense in AllExpensesForThisProduct)
+            {
+                TotalExpenses += ExpenseAmount(Expense);
+            }
+
+            return TotalExpenses;
+
+        }
+
+        public decimal ExpenseAmount(Expense Expense)
+        {
+            if (Expense.ExpenseType == ExpenseType.Absolute)
+            {
+                return Expense.Amount;
+            }
+
+            return _product.BasePrice * Expense.Amount;
+        }
+        
+
 
         public decimal GetTotalTax()
         {
@@ -39,10 +69,10 @@ namespace PriceCalculatorKata.Products
             return Math.Round(Tax, 2);
         }
 
-        public decimal GetTax(decimal BeforeDiscounts)
+        public decimal GetTax(decimal BeforeApplyingTaxDiscounts)
         {
             var TaxPrecentage = TaxPrecentageSum();
-            var PriceAfterApplyingDiscounts = _product.BasePrice - BeforeDiscounts;
+            var PriceAfterApplyingDiscounts = _product.BasePrice - BeforeApplyingTaxDiscounts;
 
             return Math.Round(PriceAfterApplyingDiscounts * TaxPrecentage, 2);
         }
