@@ -15,7 +15,7 @@ namespace PriceCalculatorKata.Caps
         {
             _caps = new List<Cap>()
             {
-                new Cap(0.2m, CapType.Percentage),
+                new Cap(0.2m, CapType.Percentage){ProductUPC = 12345},
             };
 
         }
