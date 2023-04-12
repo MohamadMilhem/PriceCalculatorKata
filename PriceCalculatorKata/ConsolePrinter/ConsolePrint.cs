@@ -8,12 +8,12 @@ using PriceCalculatorKata.Products;
 
 namespace PriceCalculatorKata.ConsolePrinter
 {
-    public class ConsolePrint
+    public class ConsolePrint : IConsolePrint
     {
         private Product Product { get; set; }
         private ProductCalculations Calculations { get; set; }
-       
-        public ConsolePrint(Product product) 
+
+        public ConsolePrint(Product product)
         {
             this.Product = product;
             this.Calculations = new ProductCalculations(product);
@@ -24,17 +24,17 @@ namespace PriceCalculatorKata.ConsolePrinter
         {
             Console.WriteLine(Product.ToString());
             Console.WriteLine($"Base Price : ${Calculations.FinalPrice()}");
-            Console.WriteLine($"Discount Price: ${Calculations.GetTotalDiscount()}");
+            Console.WriteLine($"Discount Price: ${Calculations.MaximunDiscount()}");
         }
 
         public void ReportExpenses()
         {
             Console.WriteLine($"Cost = ${Product.BasePrice}");
             Console.WriteLine($"Tax = ${Calculations.GetTotalTax()}");
-            Console.WriteLine($"Discount = ${Calculations.GetTotalDiscount()}");
+            Console.WriteLine($"Discount = ${Calculations.MaximunDiscount()}");
 
             var Expenses = new ExpensesRepository().GetExpensesByUPC(Product.UPC);
-            
+
             foreach (var expense in Expenses)
             {
                 Console.WriteLine($"{expense.Description} = ${Calculations.ExpenseAmount(expense)}");
