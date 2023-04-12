@@ -9,4 +9,6 @@ namespace PriceCalculatorKata
     public enum DiscountType { AfterTax, BeforeTax };
 
     public enum ExpenseType { Percentage, Absolute };
+
+    public enum DiscountCalculatingType { Additive, Multiplicative };
 }
