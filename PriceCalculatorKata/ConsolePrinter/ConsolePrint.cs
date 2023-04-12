@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PriceCalculatorKata.Expenses;
 using PriceCalculatorKata.Products;
+using PriceCalculatorKata.Currency;
 
 namespace PriceCalculatorKata.ConsolePrinter
 {
@@ -23,24 +24,24 @@ namespace PriceCalculatorKata.ConsolePrinter
         public void ReportDiscount()
         {
             Console.WriteLine(Product.ToString());
-            Console.WriteLine($"Base Price : ${Calculations.FinalPrice()}");
-            Console.WriteLine($"Discount Price: ${Calculations.MaximunDiscount()}");
+            Console.WriteLine($"Base Price : {Calculations.FinalPrice()} {CurrencyFormater.CurrencyFromat(Product.CurrencyType)}");
+            Console.WriteLine($"Discount Price: ${Calculations.MaximunDiscount()} {CurrencyFormater.CurrencyFromat(Product.CurrencyType)}");
         }
 
         public void ReportExpenses()
         {
-            Console.WriteLine($"Cost = ${Product.BasePrice}");
-            Console.WriteLine($"Tax = ${Calculations.GetTotalTax()}");
-            Console.WriteLine($"Discount = ${Calculations.MaximunDiscount()}");
+            Console.WriteLine($"Cost = {Product.BasePrice} {CurrencyFormater.CurrencyFromat(Product.CurrencyType)}");
+            Console.WriteLine($"Tax = {Calculations.GetTotalTax()} {CurrencyFormater.CurrencyFromat(Product.CurrencyType)}");
+            Console.WriteLine($"Discount = {Calculations.MaximunDiscount()} {CurrencyFormater.CurrencyFromat(Product.CurrencyType)}");
 
             var Expenses = new ExpensesRepository().GetExpensesByUPC(Product.UPC);
 
             foreach (var expense in Expenses)
             {
-                Console.WriteLine($"{expense.Description} = ${Calculations.ExpenseAmount(expense)}");
+                Console.WriteLine($"{expense.Description} = {Calculations.ExpenseAmount(expense)} {CurrencyFormater.CurrencyFromat(Product.CurrencyType)}");
             }
 
-            Console.WriteLine($"Total = ${Calculations.FinalPrice()}");
+            Console.WriteLine($"Total = {Calculations.FinalPrice()} {CurrencyFormater.CurrencyFromat(Product.CurrencyType)}");
 
         }
 
