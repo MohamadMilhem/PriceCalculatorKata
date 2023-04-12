@@ -8,11 +8,15 @@ using PriceCalculatorKata.Taxs;
 using PriceCalculatorKata.ConsolePrinter;
 using PriceCalculatorKata.Expenses;
 using PriceCalculatorKata.Caps;
+using System.Reflection.Metadata;
+using System.Numerics;
 
 namespace PriceCalculatorKata.Products
 {
     public class ProductCalculations
     {
+
+        private readonly int Precision = 4;
         private readonly DiscountCalculatingType _discountCalculatingType = DiscountCalculatingType.Additive;
         private readonly Product _product;
         private readonly TaxRepository _taxes;
@@ -55,7 +59,7 @@ namespace PriceCalculatorKata.Products
                 return cap.Amount;
             }
 
-            return Math.Round(cap.Amount * _product.BasePrice, 2);
+            return Math.Round(cap.Amount * _product.BasePrice, Precision);
         }
 
         public decimal GetTotalExpenses()
@@ -68,7 +72,7 @@ namespace PriceCalculatorKata.Products
                 TotalExpenses += ExpenseAmount(Expense);
             }
 
-            return Math.Round(TotalExpenses, 2);
+            return Math.Round(TotalExpenses, Precision);
 
         }
 
@@ -76,10 +80,10 @@ namespace PriceCalculatorKata.Products
         {
             if (Expense.ExpenseType == ExpenseType.Absolute)
             {
-                return Math.Round(Expense.Amount, 2);
+                return Math.Round(Expense.Amount, Precision);
             }
 
-            return Math.Round(_product.BasePrice * Expense.Amount, 2);
+            return Math.Round(_product.BasePrice * Expense.Amount, Precision);
         }
         
 
@@ -89,7 +93,7 @@ namespace PriceCalculatorKata.Products
             var BeforeTaxDiscounts = BeforeTaxDiscountsAmount();
             var Tax = GetTax(BeforeTaxDiscounts);
 
-            return Math.Round(Tax, 2);
+            return Math.Round(Tax, Precision);
         }
 
         public decimal GetTax(decimal BeforeApplyingTaxDiscounts)
@@ -97,7 +101,7 @@ namespace PriceCalculatorKata.Products
             var TaxPrecentage = TaxPrecentageSum();
             var PriceAfterApplyingDiscounts = _product.BasePrice - BeforeApplyingTaxDiscounts;
 
-            return Math.Round(PriceAfterApplyingDiscounts * TaxPrecentage, 2);
+            return Math.Round(PriceAfterApplyingDiscounts * TaxPrecentage, Precision);
         }
 
         public decimal TaxPrecentageSum()
@@ -109,7 +113,7 @@ namespace PriceCalculatorKata.Products
         {
             var BeforeTax = BeforeTaxDiscountsAmount();
             var AfterTax = AfterTaxDiscountsAmount(BeforeTax);
-            return Math.Round(BeforeTax + AfterTax, 2);
+            return Math.Round(BeforeTax + AfterTax, Precision);
         }
 
         public decimal BeforeTaxDiscountsAmount()
@@ -127,7 +131,7 @@ namespace PriceCalculatorKata.Products
 
 
             var PriceBefore = _product.BasePrice;
-            return Math.Round(PriceBefore * DiscountPrecentageBefore, 2);
+            return Math.Round(PriceBefore * DiscountPrecentageBefore, Precision);
         }
 
         public decimal DiscountPrecentageSum(DiscountType DiscountType)
@@ -171,7 +175,7 @@ namespace PriceCalculatorKata.Products
             }
 
             var PriceAfter = _product.BasePrice - BeforeTax;
-            return Math.Round(PriceAfter * DiscountPrecentageAfter, 2);
+            return Math.Round(PriceAfter * DiscountPrecentageAfter, Precision);
         }
 
 
