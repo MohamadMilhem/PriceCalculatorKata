@@ -13,23 +13,26 @@ using System.Numerics;
 
 namespace PriceCalculatorKata.Products
 {
-    public class ProductCalculations
+    public class ProductCalculations : IProductCalculations
     {
 
         private readonly int Precision = 4;
         private readonly DiscountCalculatingType _discountCalculatingType = DiscountCalculatingType.Additive;
-        private readonly Product _product;
-        private readonly TaxRepository _taxes;
-        private readonly DiscountRepository _discounts;
-        private readonly ExpensesRepository _expenses;
-        private readonly CapRepository _caps;
-        public ProductCalculations(Product product)
+        private readonly IProductRepository? _products;
+        private readonly ITaxRepository _taxes;
+        private readonly IDiscountRepository _discounts;
+        private readonly IExpensesRepository _expenses;
+        private readonly ICapRepository _caps;
+        private readonly IProduct _product;
+        public ProductCalculations(long upc, IProductRepository products, ITaxRepository taxes, IDiscountRepository discounts, IExpensesRepository expenses, ICapRepository caps)
         {
-            this._product = product;
-            this._taxes = new TaxRepository();
-            this._discounts = new DiscountRepository();
-            this._expenses = new ExpensesRepository();
-            this._caps = new CapRepository();
+            this._products = products;
+            this._taxes = taxes;
+            this._discounts = discounts;
+            this._expenses = expenses;
+            this._caps = caps;
+            this._product = _products.GetProductByUPC(upc);
+
         }
 
 
@@ -85,7 +88,7 @@ namespace PriceCalculatorKata.Products
 
             return Math.Round(_product.BasePrice * Expense.Amount, Precision);
         }
-        
+
 
 
         public decimal GetTotalTax()
@@ -153,7 +156,7 @@ namespace PriceCalculatorKata.Products
             {
                 var PrecentageNow = discount.DiscountPrecentage * Precentage;
                 Precentage -= PrecentageNow;
-                answer+= PrecentageNow;
+                answer += PrecentageNow;
             }
 
             return answer;

@@ -6,25 +6,25 @@ using System.Threading.Tasks;
 
 namespace PriceCalculatorKata.Products
 {
-    public class ProductRepository
+    public class ProductRepository : IProductRepository
     {
-        private readonly List<Product> _products;
+        private readonly List<IProduct> _products;
 
 
         public ProductRepository()
         {
-            _products = new List<Product>
+            _products = new List<IProduct>
             {
                 new Product ("The Little Prince", 12345, 20.25m)
             };
         }
 
-        public List<Product> GetProducts()
+        public List<IProduct> GetProducts()
         {
             return _products;
         }
 
-        public Product? GetProductByUPC(long UPC)
+        public IProduct? GetProductByUPC(long UPC)
         {
             return _products.FirstOrDefault(product => product.UPC == UPC);
         }
