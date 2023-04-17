@@ -10,78 +10,78 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PriceCalculatorKata
+namespace PriceCalculatorKata.Interconnection
 {
-    public class Interconnections
+    public static class Interconnections
     {
 
-        public IProduct CreateProduct(string name , long upc, decimal price)
+        public static IProduct CreateProduct(string name, long upc, decimal price)
         {
             return new Product(name, upc, price);
         }
 
-        public IDiscount CreateDiscount(decimal percentage)
+        public static IDiscount CreateDiscount(decimal percentage)
         {
             return new Discount(percentage);
         }
 
-        public IDiscount CreateUPCDiscount(decimal percentage, long upc)
+        public static IDiscount CreateUPCDiscount(decimal percentage, long upc)
         {
             return new Discount(percentage, upc);
         }
 
-        public ITax CreateTax(decimal percentage)
+        public static ITax CreateTax(decimal percentage)
         {
             return new Tax(percentage);
         }
 
-        public ITax CreateTax(decimal percentage, long upc)
+        public static ITax CreateTax(decimal percentage, long upc)
         {
             return new Tax(upc, percentage);
         }
 
-        public IExpenses CreateExpense(decimal amount , ExpenseType expenseType, string description)
+        public static IExpenses CreateExpense(decimal amount, ExpenseType expenseType, string description)
         {
             return new Expense(amount, expenseType, description);
         }
 
-        public ICap CreateCap(decimal amount, CapType capType)
+        public static ICap CreateCap(decimal amount, CapType capType)
         {
             return new Cap(amount, capType);
         }
 
-        public IConsolePrint CreateConsolePrint(long upc)
+        public static IConsolePrint CreateConsolePrint(long upc)
         {
-            return new ConsolePrint(upc ,CreateProductRepository(), CreateProductCalculations(upc));
+            return new ConsolePrint(upc, CreateProductRepository(), CreateProductCalculations(upc));
         }
 
 
-        public IProductRepository CreateProductRepository()
+        public static IProductRepository CreateProductRepository()
         {
             return new ProductRepository();
         }
 
-        public IDiscountRepository CreateDiscountRepository()
+        public static IDiscountRepository CreateDiscountRepository()
         {
             return new DiscountRepository();
         }
 
-        public ITaxRepository CreateTaxRepository() 
+        public static ITaxRepository CreateTaxRepository()
         {
             return new TaxRepository();
         }
 
-        public IExpensesRepository CreateExpenseRepository() 
+        public static IExpensesRepository CreateExpenseRepository()
         {
             return new ExpensesRepository();
         }
 
-        public ICapRepository CreateCapRepository() 
+        public static ICapRepository CreateCapRepository()
         {
             return new CapRepository();
         }
 
-        public IProductCalculations CreateProductCalculations(long upc)
+        public static IProductCalculations CreateProductCalculations(long upc)
         {
             return new ProductCalculations(upc, CreateProductRepository(), CreateTaxRepository(), CreateDiscountRepository(), CreateExpenseRepository(), CreateCapRepository());
         }

@@ -1,4 +1,5 @@
 ﻿using PriceCalculatorKata.Products;
+using PriceCalculatorKata.Interconnection;
 using PriceCalculatorKata.Taxs;
 using PriceCalculatorKata.Discounts;
 using PriceCalculatorKata.ConsolePrinter;
@@ -15,7 +16,7 @@ namespace PriceCalculatorKata
             {
                 Console.WriteLine("Enter UPC of a product :");
                 var optionFromConsole = Console.ReadLine();
-
+   
                 if (optionFromConsole == null)
                 {
                     Console.WriteLine("Please try Again...");
@@ -33,8 +34,7 @@ namespace PriceCalculatorKata
                     continue;
                 }
 
-                var Calculations = new ProductCalculations(ProductEntered);
-                var Printer = new ConsolePrint(ProductEntered);
+                var Printer = Interconnections.CreateConsolePrint(option);
 
                 Printer.ReportExpenses();
                 Printer.ReportDiscount();
