@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PriceCalculatorKata.Taxs
 {
-    public class Tax
+    public class Tax : ITax
     {
         public long ProductUPC { get; set; }
         public decimal TaxPercentage { get; set; } = 0.20m;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PriceCalculatorKata.Taxs
 {
-    public class TaxRepository
+    public class TaxRepository : ITaxRepository
     {
         private readonly List<Tax> _taxes;
 
