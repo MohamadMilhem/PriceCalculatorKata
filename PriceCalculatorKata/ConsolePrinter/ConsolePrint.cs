@@ -11,13 +11,15 @@ namespace PriceCalculatorKata.ConsolePrinter
 {
     public class ConsolePrint : IConsolePrint
     {
-        private Product Product { get; set; }
-        private ProductCalculations Calculations { get; set; }
+        private IProductRepository Products { get; set; }
+        private IProductCalculations Calculations { get; set; }
+        private IProduct Product { get; set; }
 
-        public ConsolePrint(Product product)
+
+        public ConsolePrint(long upc, IProductRepository products, IProductCalculations calculations)
         {
-            this.Product = product;
-            this.Calculations = new ProductCalculations(product);
+            this.Product = products.GetProductByUPC(upc);
+            this.Calculations = calculations;
         }
 
 
